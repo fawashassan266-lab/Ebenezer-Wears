@@ -1,10 +1,13 @@
+```javascript
 document.addEventListener("DOMContentLoaded", function () {
+
 
     /* =========================
        CART
     ========================= */
 
-    let cart = [];
+    let cart = JSON.parse(localStorage.getItem("ebenezerCart")) || [];
+
 
     const cartButton = document.getElementById("cartButton");
     const cartPanel = document.getElementById("cartPanel");
@@ -15,61 +18,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const checkoutButton = document.getElementById("checkoutButton");
 
 
-    /* OPEN CART */
+    function saveCart() {
 
-    cartButton.addEventListener("click", function () {
-        cartPanel.classList.add("open");
-    });
+        localStorage.setItem(
+            "ebenezerCart",
+            JSON.stringify(cart)
+        );
 
+    }
 
-    /* CLOSE CART */
-
-    closeCart.addEventListener("click", function () {
-        cartPanel.classList.remove("open");
-    });
-
-
-    /* ADD TO CART */
-
-    const addCartButtons = document.querySelectorAll(".add-cart-button");
-
-    addCartButtons.forEach(function (button) {
-
-        button.addEventListener("click", function () {
-
-            const productName = button.dataset.product;
-
-            const productCard = button.closest(".product-card");
-
-            const priceText = productCard
-                .querySelector(".product-price")
-                .textContent
-                .replace("$", "")
-                .trim();
-
-            const price = parseFloat(priceText);
-
-            cart.push({
-                name: productName,
-                price: price
-            });
-
-            updateCart();
-
-            cartPanel.classList.add("open");
-
-        });
-
-    });
-
-
-    /* UPDATE CART */
 
     function updateCart() {
+
+        if (!cartCount || !cartItems || !cartTotal) {
+            return;
+        }
+
 
         cartCount.textContent = cart.length;
 
         cartItems.innerHTML = "";
+
 
         if (cart.length === 0) {
 
@@ -82,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
             cartTotal.textContent = "$0.00";
 
             return;
+
         }
 
 
@@ -90,11 +60,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         cart.forEach(function (item, index) {
 
-            total += item.price;
+            total += item.price * item.quantity;
 
-            const cartItem = document.createElement("div");
+
+            const cartItem =
+                document.createElement("div");
 
             cartItem.className = "cart-item";
+
 
             cartItem.innerHTML = `
 
@@ -106,9 +79,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     <p>
                         $${item.price.toFixed(2)}
+                        × ${item.quantity}
                     </p>
 
                 </div>
+
 
                 <button
                     class="remove-item"
@@ -119,25 +94,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
             `;
 
+
             cartItems.appendChild(cartItem);
 
         });
 
 
-        cartTotal.textContent = "$" + total.toFixed(2);
+        cartTotal.textContent =
+            "$" + total.toFixed(2);
 
 
-        /* REMOVE ITEMS */
+        const removeButtons =
+            document.querySelectorAll(".remove-item");
 
-        const removeButtons = document.querySelectorAll(".remove-item");
 
         removeButtons.forEach(function (button) {
 
             button.addEventListener("click", function () {
 
-                const index = Number(button.dataset.index);
+                const index =
+                    Number(button.dataset.index);
+
 
                 cart.splice(index, 1);
+
+
+                saveCart();
 
                 updateCart();
 
@@ -148,22 +130,134 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* CHECKOUT */
+    /* OPEN CART */
 
-    checkoutButton.addEventListener("click", function () {
+    if (cartButton) {
 
-        if (cart.length === 0) {
+        cartButton.addEventListener("click", function () {
 
-            alert("Your cart is empty.");
+            cartPanel.classList.add("open");
 
-            return;
-        }
+        });
 
-        alert(
-            "Thank you for shopping with Ebenezer Wears! Checkout will be available soon."
-        );
+    }
+
+
+    /* CLOSE CART */
+
+    if (closeCart) {
+
+        closeCart.addEventListener("click", function () {
+
+            cartPanel.classList.remove("open");
+
+        });
+
+    }
+
+
+
+    /* =========================
+       ADD TO CART
+    ========================= */
+
+    const addCartButtons =
+        document.querySelectorAll(".add-cart-button");
+
+
+    addCartButtons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            const productName =
+                button.dataset.product;
+
+
+            const productCard =
+                button.closest(".product-card");
+
+
+            const priceText =
+                productCard
+                    .querySelector(".product-price")
+                    .textContent
+                    .replace("$", "")
+                    .trim();
+
+
+            const price =
+                parseFloat(priceText);
+
+
+            const existingProduct =
+                cart.find(function (item) {
+
+                    return item.name === productName;
+
+                });
+
+
+            if (existingProduct) {
+
+                existingProduct.quantity++;
+
+            } else {
+
+                cart.push({
+
+                    name: productName,
+
+                    price: price,
+
+                    quantity: 1
+
+                });
+
+            }
+
+
+            saveCart();
+
+            updateCart();
+
+
+            if (cartPanel) {
+
+                cartPanel.classList.add("open");
+
+            }
+
+        });
 
     });
+
+
+
+    /* =========================
+       CHECKOUT
+    ========================= */
+
+    if (checkoutButton) {
+
+        checkoutButton.addEventListener("click", function () {
+
+            if (cart.length === 0) {
+
+                alert("Your cart is empty.");
+
+                return;
+
+            }
+
+
+            alert(
+                "Thank you for shopping with Ebenezer Wears! Checkout will be available soon."
+            );
+
+        });
+
+    }
+
 
 
     /* =========================
@@ -180,6 +274,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             button.classList.toggle("active");
 
+
             if (button.classList.contains("active")) {
 
                 button.textContent = "♥";
@@ -195,6 +290,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
+
     /* =========================
        SEARCH
     ========================= */
@@ -202,41 +298,48 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchInput =
         document.getElementById("searchInput");
 
+
     const productCards =
         document.querySelectorAll(".product-card");
 
 
-    searchInput.addEventListener("input", function () {
+    if (searchInput) {
 
-        const searchTerm =
-            searchInput.value.toLowerCase().trim();
+        searchInput.addEventListener("input", function () {
 
-
-        productCards.forEach(function (card) {
-
-            const productName =
-                card.dataset.name.toLowerCase();
-
-            const productCategory =
-                card.dataset.category.toLowerCase();
+            const searchTerm =
+                searchInput.value.toLowerCase().trim();
 
 
-            if (
-                productName.includes(searchTerm) ||
-                productCategory.includes(searchTerm)
-            ) {
+            productCards.forEach(function (card) {
 
-                card.classList.remove("hidden");
+                const productName =
+                    card.dataset.name.toLowerCase();
 
-            } else {
 
-                card.classList.add("hidden");
+                const productCategory =
+                    card.dataset.category.toLowerCase();
 
-            }
+
+                if (
+                    productName.includes(searchTerm) ||
+                    productCategory.includes(searchTerm)
+                ) {
+
+                    card.classList.remove("hidden");
+
+                } else {
+
+                    card.classList.add("hidden");
+
+                }
+
+            });
 
         });
 
-    });
+    }
+
 
 
     /* =========================
@@ -247,34 +350,42 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("categoryFilter");
 
 
-    categoryFilter.addEventListener("change", function () {
+    if (categoryFilter) {
 
-        const selectedCategory =
-            categoryFilter.value;
+        categoryFilter.addEventListener(
+            "change",
+            function () {
 
-
-        productCards.forEach(function (card) {
-
-            const productCategory =
-                card.dataset.category;
+                const selectedCategory =
+                    categoryFilter.value;
 
 
-            if (
-                selectedCategory === "all" ||
-                productCategory === selectedCategory
-            ) {
+                productCards.forEach(function (card) {
 
-                card.classList.remove("hidden");
+                    const productCategory =
+                        card.dataset.category;
 
-            } else {
 
-                card.classList.add("hidden");
+                    if (
+                        selectedCategory === "all" ||
+                        productCategory === selectedCategory
+                    ) {
+
+                        card.classList.remove("hidden");
+
+                    } else {
+
+                        card.classList.add("hidden");
+
+                    }
+
+                });
 
             }
+        );
 
-        });
+    }
 
-    });
 
 
     /* =========================
@@ -293,7 +404,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 card.dataset.category;
 
 
-            categoryFilter.value = category;
+            if (categoryFilter) {
+
+                categoryFilter.value =
+                    category;
+
+            }
 
 
             productCards.forEach(function (product) {
@@ -313,14 +429,24 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
 
-            document.getElementById("shop")
-                .scrollIntoView({
+            const shop =
+                document.getElementById("shop");
+
+
+            if (shop) {
+
+                shop.scrollIntoView({
+
                     behavior: "smooth"
+
                 });
+
+            }
 
         });
 
     });
+
 
 
     /* =========================
@@ -331,16 +457,122 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("searchButton");
 
 
-    searchButton.addEventListener("click", function () {
+    if (searchButton && searchInput) {
 
-        searchInput.focus();
+        searchButton.addEventListener("click", function () {
 
-        document.getElementById("shop")
-            .scrollIntoView({
-                behavior: "smooth"
-            });
+            searchInput.focus();
 
-    });
+
+            const shop =
+                document.getElementById("shop");
+
+
+            if (shop) {
+
+                shop.scrollIntoView({
+
+                    behavior: "smooth"
+
+                });
+
+            }
+
+        });
+
+    }
+
+
+
+    /* =========================
+       PRODUCT PAGE
+    ========================= */
+
+    const productAddCart =
+        document.getElementById("productAddCart");
+
+
+    if (productAddCart) {
+
+        productAddCart.addEventListener(
+            "click",
+            function () {
+
+                const size =
+                    document.getElementById("size").value;
+
+
+                const quantityElement =
+                    document.getElementById("quantity");
+
+
+                const quantity =
+                    Number(quantityElement.textContent);
+
+
+                if (size === "") {
+
+                    alert("Please select a size first.");
+
+                    return;
+
+                }
+
+
+                const productName =
+                    "Classic White Shirt";
+
+
+                const productPrice =
+                    45;
+
+
+                const existingProduct =
+                    cart.find(function (item) {
+
+                        return (
+                            item.name === productName &&
+                            item.size === size
+                        );
+
+                    });
+
+
+                if (existingProduct) {
+
+                    existingProduct.quantity +=
+                        quantity;
+
+                } else {
+
+                    cart.push({
+
+                        name: productName,
+
+                        price: productPrice,
+
+                        size: size,
+
+                        quantity: quantity
+
+                    });
+
+                }
+
+
+                saveCart();
+
+
+                alert(
+                    productName +
+                    " has been added to your cart."
+                );
+
+            }
+        );
+
+    }
+
 
 
     /* =========================
@@ -349,207 +581,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     updateCart();
 
+
 });
-```css
-/* =========================
-   PRODUCT PAGE
-========================= */
-
-.product-page {
-    padding: 90px 6%;
-    background: #ffffff;
-}
-
-.product-details {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
-}
-
-
-/* PRODUCT IMAGE */
-
-.product-details-image {
-    width: 100%;
-    height: 650px;
-    overflow: hidden;
-    background: #f2f2f2;
-}
-
-.product-details-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-
-/* PRODUCT INFORMATION */
-
-.product-details-info {
-    padding-top: 20px;
-}
-
-.product-details-info h1 {
-    font-size: 52px;
-    line-height: 1.05;
-    letter-spacing: -2px;
-    margin-bottom: 20px;
-}
-
-.product-details-price {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 30px;
-}
-
-.product-description {
-    max-width: 520px;
-    color: #666666;
-    font-size: 16px;
-    line-height: 1.8;
-    margin-bottom: 35px;
-}
-
-
-/* PRODUCT OPTIONS */
-
-.product-option {
-    margin-bottom: 25px;
-}
-
-.product-option label {
-    display: block;
-    font-size: 13px;
-    font-weight: 700;
-    margin-bottom: 10px;
-}
-
-.product-option select {
-    width: 100%;
-    max-width: 400px;
-    padding: 15px;
-    border: 1px solid #dddddd;
-    background: #ffffff;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-
-/* QUANTITY */
-
-.quantity-control {
-    width: 140px;
-    height: 48px;
-    border: 1px solid #dddddd;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.quantity-control button {
-    width: 45px;
-    height: 100%;
-    border: none;
-    background: #ffffff;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.quantity-control span {
-    font-size: 15px;
-    font-weight: 600;
-}
-
-
-/* ADD TO CART */
-
-.product-add-cart {
-    width: 100%;
-    max-width: 400px;
-    padding: 17px;
-    border: none;
-    background: #111111;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.3s;
-    margin-bottom: 40px;
-}
-
-.product-add-cart:hover {
-    background: #333333;
-}
-
-
-/* EXTRA PRODUCT INFORMATION */
-
-.product-extra {
-    max-width: 400px;
-    border-top: 1px solid #eeeeee;
-}
-
-.product-extra div {
-    padding: 18px 0;
-    border-bottom: 1px solid #eeeeee;
-}
-
-.product-extra strong {
-    display: block;
-    font-size: 13px;
-    margin-bottom: 5px;
-}
-
-.product-extra p {
-    color: #777777;
-    font-size: 13px;
-}
-
-
-/* PRODUCT PAGE MOBILE */
-
-@media (max-width: 800px) {
-
-    .product-page {
-        padding: 60px 5%;
-    }
-
-    .product-details {
-        grid-template-columns: 1fr;
-        gap: 45px;
-    }
-
-    .product-details-image {
-        height: 550px;
-    }
-
-    .product-details-info {
-        padding-top: 0;
-    }
-
-    .product-details-info h1 {
-        font-size: 42px;
-    }
-
-}
-
-
-@media (max-width: 480px) {
-
-    .product-details-image {
-        height: 450px;
-    }
-
-    .product-details-info h1 {
-        font-size: 36px;
-    }
-
-    .product-page {
-        padding: 40px 5%;
-    }
-
-}
 ```
+
