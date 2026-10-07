@@ -1,7 +1,11 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Ebenezer Wears | Fashion & Clothing</title>
@@ -12,33 +16,63 @@
     >
 
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
+
     <!-- HEADER -->
+
     <header class="header">
 
         <div class="logo">
             EBENEZER <span>WEARS</span>
         </div>
 
+
         <nav class="navigation">
-            <a href="#home">Home</a>
-            <a href="#shop">Shop</a>
-            <a href="#categories">Categories</a>
-            <a href="#about">About</a>
+
+            <a href="#home">
+                Home
+            </a>
+
+            <a href="#shop">
+                Shop
+            </a>
+
+            <a href="#categories">
+                Categories
+            </a>
+
+            <a href="#about">
+                About
+            </a>
+
         </nav>
+
 
         <div class="header-actions">
 
-            <button class="icon-button" id="searchButton">
+            <button
+                class="icon-button"
+                id="searchButton"
+            >
                 🔍
             </button>
 
-            <button class="icon-button" id="cartButton">
+
+            <button
+                class="icon-button"
+                id="cartButton"
+            >
                 🛒
-                <span id="cartCount">0</span>
+
+                <span id="cartCount">
+                    0
+                </span>
+
             </button>
 
         </div>
@@ -46,10 +80,15 @@
     </header>
 
 
-    <!-- HERO SECTION -->
+
+    <!-- HERO -->
+
     <main>
 
-        <section id="home" class="hero">
+        <section
+            id="home"
+            class="hero"
+        >
 
             <div class="hero-content">
 
@@ -57,21 +96,28 @@
                     NEW COLLECTION
                 </p>
 
+
                 <h1>
                     Wear your
                     <span>confidence.</span>
                 </h1>
+
 
                 <p class="hero-text">
                     Discover stylish pieces made for
                     everyday confidence and effortless fashion.
                 </p>
 
-                <a href="#shop" class="hero-button">
+
+                <a
+                    href="#shop"
+                    class="hero-button"
+                >
                     Shop Collection
                 </a>
 
             </div>
+
 
             <div class="hero-image">
 
@@ -85,8 +131,13 @@
         </section>
 
 
+
         <!-- CATEGORIES -->
-        <section id="categories" class="categories-section">
+
+        <section
+            id="categories"
+            class="categories-section"
+        >
 
             <div class="section-heading">
 
@@ -94,15 +145,21 @@
                     EXPLORE
                 </p>
 
+
                 <h2>
                     Shop by category
                 </h2>
 
             </div>
 
+
             <div class="categories">
 
-                <button class="category-card" data-category="shirts">
+
+                <button
+                    class="category-card"
+                    data-category="shirts"
+                >
 
                     <div class="category-image">
 
@@ -113,12 +170,19 @@
 
                     </div>
 
-                    <h3>Shirts</h3>
+
+                    <h3>
+                        Shirts
+                    </h3>
 
                 </button>
 
 
-                <button class="category-card" data-category="dresses">
+
+                <button
+                    class="category-card"
+                    data-category="dresses"
+                >
 
                     <div class="category-image">
 
@@ -129,12 +193,19 @@
 
                     </div>
 
-                    <h3>Dresses</h3>
+
+                    <h3>
+                        Dresses
+                    </h3>
 
                 </button>
 
 
-                <button class="category-card" data-category="jackets">
+
+                <button
+                    class="category-card"
+                    data-category="jackets"
+                >
 
                     <div class="category-image">
 
@@ -145,12 +216,19 @@
 
                     </div>
 
-                    <h3>Jackets</h3>
+
+                    <h3>
+                        Jackets
+                    </h3>
 
                 </button>
 
 
-                <button class="category-card" data-category="pants">
+
+                <button
+                    class="category-card"
+                    data-category="pants"
+                >
 
                     <div class="category-image">
 
@@ -161,7 +239,10 @@
 
                     </div>
 
-                    <h3>Pants</h3>
+
+                    <h3>
+                        Pants
+                    </h3>
 
                 </button>
 
@@ -170,8 +251,13 @@
         </section>
 
 
+
         <!-- SHOP -->
-        <section id="shop" class="shop-section">
+
+        <section
+            id="shop"
+            class="shop-section"
+        >
 
             <div class="section-heading shop-heading">
 
@@ -181,11 +267,13 @@
                         OUR COLLECTION
                     </p>
 
+
                     <h2>
                         Featured clothing
                     </h2>
 
                 </div>
+
 
                 <select id="categoryFilter">
 
@@ -214,6 +302,9 @@
             </div>
 
 
+
+            <!-- SEARCH -->
+
             <div class="search-container">
 
                 <input
@@ -225,30 +316,39 @@
             </div>
 
 
-            <div id="productGrid" class="product-grid">
+
+            <!-- PRODUCTS -->
+
+            <div
+                id="productGrid"
+                class="product-grid"
+            >
+
 
                 <!-- PRODUCT 1 -->
+
                 <article
                     class="product-card"
                     data-category="shirts"
                     data-name="Classic White Shirt"
                 >
 
-                    <div class="product-image">
+                    <a
+                        href="product.html"
+                        class="product-link"
+                    >
 
-                        <img
-                            src="https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=700&q=80"
-                            alt="Classic white shirt"
-                        >
+                        <div class="product-image">
 
-                        <button
-                            class="favorite-button"
-                            aria-label="Add to favorites"
-                        >
-                            ♡
-                        </button>
+                            <img
+                                src="https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=700&q=80"
+                                alt="Classic white shirt"
+                            >
 
-                    </div>
+                        </div>
+
+                    </a>
+
 
                     <div class="product-info">
 
@@ -256,13 +356,16 @@
                             SHIRTS
                         </p>
 
+
                         <h3>
                             Classic White Shirt
                         </h3>
 
+
                         <p class="product-price">
                             $45.00
                         </p>
+
 
                         <button
                             class="add-cart-button"
@@ -276,7 +379,9 @@
                 </article>
 
 
+
                 <!-- PRODUCT 2 -->
+
                 <article
                     class="product-card"
                     data-category="dresses"
@@ -290,6 +395,7 @@
                             alt="Elegant black dress"
                         >
 
+
                         <button
                             class="favorite-button"
                             aria-label="Add to favorites"
@@ -299,19 +405,23 @@
 
                     </div>
 
+
                     <div class="product-info">
 
                         <p class="product-category">
                             DRESSES
                         </p>
 
+
                         <h3>
                             Elegant Black Dress
                         </h3>
 
+
                         <p class="product-price">
                             $75.00
                         </p>
+
 
                         <button
                             class="add-cart-button"
@@ -325,7 +435,9 @@
                 </article>
 
 
+
                 <!-- PRODUCT 3 -->
+
                 <article
                     class="product-card"
                     data-category="jackets"
@@ -339,6 +451,7 @@
                             alt="Classic denim jacket"
                         >
 
+
                         <button
                             class="favorite-button"
                             aria-label="Add to favorites"
@@ -348,19 +461,23 @@
 
                     </div>
 
+
                     <div class="product-info">
 
                         <p class="product-category">
                             JACKETS
                         </p>
 
+
                         <h3>
                             Classic Denim Jacket
                         </h3>
 
+
                         <p class="product-price">
                             $85.00
                         </p>
+
 
                         <button
                             class="add-cart-button"
@@ -374,7 +491,9 @@
                 </article>
 
 
+
                 <!-- PRODUCT 4 -->
+
                 <article
                     class="product-card"
                     data-category="pants"
@@ -388,6 +507,7 @@
                             alt="Modern casual pants"
                         >
 
+
                         <button
                             class="favorite-button"
                             aria-label="Add to favorites"
@@ -397,19 +517,23 @@
 
                     </div>
 
+
                     <div class="product-info">
 
                         <p class="product-category">
                             PANTS
                         </p>
 
+
                         <h3>
                             Modern Casual Pants
                         </h3>
 
+
                         <p class="product-price">
                             $60.00
                         </p>
+
 
                         <button
                             class="add-cart-button"
@@ -423,7 +547,9 @@
                 </article>
 
 
+
                 <!-- PRODUCT 5 -->
+
                 <article
                     class="product-card"
                     data-category="shirts"
@@ -437,6 +563,7 @@
                             alt="Premium black shirt"
                         >
 
+
                         <button
                             class="favorite-button"
                             aria-label="Add to favorites"
@@ -446,19 +573,23 @@
 
                     </div>
 
+
                     <div class="product-info">
 
                         <p class="product-category">
                             SHIRTS
                         </p>
 
+
                         <h3>
                             Premium Black Shirt
                         </h3>
 
+
                         <p class="product-price">
                             $50.00
                         </p>
+
 
                         <button
                             class="add-cart-button"
@@ -472,7 +603,9 @@
                 </article>
 
 
+
                 <!-- PRODUCT 6 -->
+
                 <article
                     class="product-card"
                     data-category="dresses"
@@ -486,6 +619,7 @@
                             alt="Summer fashion dress"
                         >
 
+
                         <button
                             class="favorite-button"
                             aria-label="Add to favorites"
@@ -495,19 +629,23 @@
 
                     </div>
 
+
                     <div class="product-info">
 
                         <p class="product-category">
                             DRESSES
                         </p>
 
+
                         <h3>
                             Summer Fashion Dress
                         </h3>
 
+
                         <p class="product-price">
                             $70.00
                         </p>
+
 
                         <button
                             class="add-cart-button"
@@ -525,8 +663,13 @@
         </section>
 
 
+
         <!-- ABOUT -->
-        <section id="about" class="about-section">
+
+        <section
+            id="about"
+            class="about-section"
+        >
 
             <div class="about-content">
 
@@ -534,9 +677,11 @@
                     ABOUT EBENEZER WEARS
                 </p>
 
+
                 <h2>
                     Fashion that speaks for you.
                 </h2>
+
 
                 <p>
                     Ebenezer Wears brings together stylish,
@@ -551,8 +696,13 @@
     </main>
 
 
+
     <!-- CART PANEL -->
-    <aside id="cartPanel" class="cart-panel">
+
+    <aside
+        id="cartPanel"
+        class="cart-panel"
+    >
 
         <div class="cart-header">
 
@@ -560,19 +710,25 @@
                 Your Cart
             </h2>
 
+
             <button id="closeCart">
                 ×
             </button>
 
         </div>
 
-        <div id="cartItems" class="cart-items">
+
+        <div
+            id="cartItems"
+            class="cart-items"
+        >
 
             <p class="empty-cart">
                 Your cart is empty.
             </p>
 
         </div>
+
 
         <div class="cart-footer">
 
@@ -582,11 +738,13 @@
                     Total
                 </span>
 
+
                 <strong id="cartTotal">
                     $0.00
                 </strong>
 
             </div>
+
 
             <button id="checkoutButton">
                 Checkout
@@ -597,7 +755,9 @@
     </aside>
 
 
+
     <!-- FOOTER -->
+
     <footer class="footer">
 
         <div class="footer-content">
@@ -608,11 +768,13 @@
                     EBENEZER WEARS
                 </div>
 
+
                 <p>
                     Style. Confidence. You.
                 </p>
 
             </div>
+
 
             <div class="footer-links">
 
@@ -620,13 +782,16 @@
                     Home
                 </a>
 
+
                 <a href="#shop">
                     Shop
                 </a>
 
+
                 <a href="#categories">
                     Categories
                 </a>
+
 
                 <a href="#about">
                     About
@@ -635,6 +800,7 @@
             </div>
 
         </div>
+
 
         <div class="footer-bottom">
 
@@ -647,7 +813,11 @@
     </footer>
 
 
+
     <script src="script.js"></script>
 
+
 </body>
+
 </html>
+```
