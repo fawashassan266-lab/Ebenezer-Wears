@@ -6,7 +6,12 @@ const PORT = process.env.PORT || 3000;
 
 const server = http.createServer(function (request, response) {
 
-    let filePath = request.url;
+    const urlPath = new URL(
+        request.url,
+        `http://${request.headers.host}`
+    ).pathname;
+
+    let filePath = urlPath;
 
     if (filePath === "/") {
         filePath = "/index.html";
