@@ -1,0 +1,8 @@
+{
+  "name": "ebenezer-wears",
+  "version": "1.0.0",
+  "description": "Ebenezer Wears clothing website",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
